@@ -8,7 +8,7 @@ const authenticated = require('../helpers/JWT-Auth');
 
 router.get('/', authenticated, async (req, res) => {
     const user = await User.findOne({ _id: req.userId }, { password: 0 });
-    if (!user) return commonFunction.baseResponse(404, false, 'User Not found', function (response) {
+    if (!user) return commonFunction.baseResponse(404, false, 'User Not foun', function (response) {
         res.json(response);
     });
 
