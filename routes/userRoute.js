@@ -33,9 +33,15 @@ router.post('/register', async (req, res) => {
             if (err) return commonFunction.baseResponse(400, false, err, function (response) {
                 res.json(response);
             });
-            return commonFunction.baseResponse(201, true, result, function (response) {
-                const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
-                res.header(constants.AUTH_TOKEN, token).json(response);
+
+            const token = jwt.sign({ _id: newUser._id }, process.env.TOKEN_SECRET);
+            var authResponse = {
+                userId: newUser._id,
+                "auth-token": token,
+                email: newUser.email
+            }
+            return commonFunction.baseResponse(201, true, authResponse, function (response) {
+                res.json(response);
             });
         });
     } catch (err) {
@@ -55,9 +61,14 @@ router.post('/login', (req, res) => {
 
             if (user) {
                 if (match) {
-                    commonFunction.baseResponse(200, true, 'Login Successful', function (response) {
-                        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-                        res.header(constants.AUTH_TOKEN, token).json(response);
+                    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+                    var authResponse = {
+                        userId: user._id,
+                        "auth-token": token,
+                        email: user.email
+                    }
+                    commonFunction.baseResponse(200, true, authResponse, function (response) {
+                        res.json(response);
                     });
                 } else {
                     commonFunction.baseResponse(400, false, 'Invalid Password', function (response) {

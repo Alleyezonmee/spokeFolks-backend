@@ -12,6 +12,7 @@ dotenv.config();
 // routes
 const userRoute = require('./routes/userRoute');
 const indexRoute = require('./routes/indexRoute');
+const vehicleRoute = require('./routes/vehicleRoute')
 
 // DB connection
 mongoose.connect(process.env.DB_CONNECT,
@@ -25,5 +26,6 @@ app.use(logger('dev'));
 
 app.use('/api/user', userRoute);
 app.use('/', indexRoute);
+app.use('/api/vehicle', vehicleRoute)
 
 app.listen(3000, () => console.log('Server up and running'));
