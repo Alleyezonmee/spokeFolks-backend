@@ -18,6 +18,9 @@ const vehicleRoute = require('./routes/vehicleRoute')
 mongoose.connect(process.env.DB_CONNECT,
      {useNewUrlParser: true},
      () => console.log('Connected to DB'));
+ 
+ app.use(express.static(__dirname + '/public'));
+ app.use('./uploads', express.static('uploads'));
 
 // middlewares
 app.use(express.json());

@@ -5,6 +5,9 @@ const commonFunction = require('../helpers/utils');
 const jwt = require('jsonwebtoken');
 const constants = require('../helpers/constants');
 const authenticated = require('../helpers/JWT-Auth');
+const multer = require('multer');
+const photoUpload = require('../helpers/photoUpload');
+const { baseResponse } = require('../helpers/utils');
 
 router.get('/', authenticated, async (req, res) => {
     const user = await User.findOne({ _id: req.userId }, { password: 0 });
@@ -120,5 +123,12 @@ router.put('/updateProfile', authenticated, async (req, res) => {
         })
     }
 });
+
+router.post('/uploadProfilePhoto', authenticated, photoUpload.single('profile-file'), function(req, res, next) {
+    console.log(JSON.stringify(req.file.path));
+    commonFunction.baseResponse(200, true, "Uploaded Successfully", function (response) {
+        res.json(response);
+    })
+})
 
 module.exports = router;

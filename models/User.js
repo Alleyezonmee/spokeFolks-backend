@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        reuired: true
+        required: true
     },
     profile: {
         type: mongoose.Schema.Types.Mixed, ref:'Profile', default: { }
