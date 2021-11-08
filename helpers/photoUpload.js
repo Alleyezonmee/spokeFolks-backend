@@ -9,6 +9,8 @@ var storage = multer.diskStorage({
     }
 });
 
+// Photo Upload remaining
+
 var upload = multer({storage: storage});
 
 module.exports = upload
